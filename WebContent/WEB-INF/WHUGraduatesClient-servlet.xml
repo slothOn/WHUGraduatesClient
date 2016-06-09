@@ -65,6 +65,22 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory"/>
 		
+	<!-- 配置kaptcha验证码 -->  
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  
+	    <property name="config">  
+	        <bean class="com.google.code.kaptcha.util.Config">  
+	            <constructor-arg type="java.util.Properties">  
+	                <props>  
+	                    <prop key="kaptcha.image.width">100</prop>  
+	                    <prop key="kaptcha.image.height">50</prop>  
+	                    <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>  
+	                    <prop key="kaptcha.textproducer.char.string">0123456789abcdefghijklmnopqrstuvwxyz</prop>  
+	                    <prop key="kaptcha.textproducer.char.length">4</prop>  
+	                </props>  
+	            </constructor-arg>  
+	        </bean>  
+	    </property>  
+	</bean>  
 	<tx:advice id="txAdvice" 
 		transaction-manager="transactionManager">
 		<tx:attributes>

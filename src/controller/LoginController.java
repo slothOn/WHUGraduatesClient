@@ -47,4 +47,6 @@ public class LoginController {
 		session.setAttribute("sid", "");
 		session.setAttribute("sname", "");
 	}
+	
+	
 }

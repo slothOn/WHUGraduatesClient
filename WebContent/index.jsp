@@ -66,12 +66,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			                    <form role="form" action="user.html" method="post" class="login-form">
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="form-username">Username</label>
-			                        	<input type="text" name="username" placeholder="Username..." class="form-username form-control" id="form-username">
+			                        	<input type="text" name="username" placeholder="用户名（学号）" class="form-username form-control" id="form-username">
 			                        </div>
 			                        <div class="form-group">
 			                        	<label class="sr-only" for="form-password">Password</label>
-			                        	<input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
+			                        	<input type="password" name="password" placeholder="密码" class="form-password form-control" id="form-password">
 			                        </div>
+			                         <div class="form-group">
+                                        <input type="text" name="captcha" class="form-control" style="width: 50%; display: inline-block" placeholder="登录验证">
+                                        <span style="display: inline-block; width: 30%; text-align: right;"><img src="captcha.html"></span>
+                                    </div>
 			                        <button type="submit" class="btn">Sign in!</button>
                                     <button type="button" class="btn signupbtn" data-toggle="modal" data-target="#signupmodal">Sign up?</button>
 			                    </form>
@@ -108,6 +112,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <div class="col-sm-10">
                                     <input type="password" name="password" class="form-control" placeholder="请输入密码">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">验证码:</label>
+                                <div  class="col-sm-5">
+                                    <input type="text" name="captcha" class="form-control" placeholder="注册验证">
+                                </div>
+                                <span style="display: inline-block; width: 30%; text-align: right;"><img src="captcha.html"></span>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2"></div>
