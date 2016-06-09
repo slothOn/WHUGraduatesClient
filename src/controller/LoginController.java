@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.code.kaptcha.Constants;
+
 import service.UserDao;
 
 @Controller
@@ -24,19 +26,24 @@ public class LoginController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/user")
-	public String login(@RequestParam String username, @RequestParam String password, HttpSession session){
-		if(udao.checkUser(username, password)){		
-			session.setAttribute("sid", username);
-			return "redirect:mainpage.html";
-		}return "index";
+	public String login(@RequestParam String username, @RequestParam String password, @RequestParam String captcha, HttpSession session){
+		if(captcha != null && captcha.equals(session.getAttribute(Constants.KAPTCHA_SESSION_KEY))){
+			if(udao.checkUser(username, password)){		
+				session.setAttribute("sid", username);
+				return "redirect:mainpage.html";
+			}
+		}
+		return "index";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/logup")
 	public String logup(@RequestParam String sid, @RequestParam String sname, 
-			@RequestParam String password){
-		if(udao.insertUser(sid, sname, password)){
-			System.out.println("插入成功");
-			return "index";
+			@RequestParam String password, @RequestParam String captcha, HttpSession session){
+		if(captcha != null && captcha.equals(session.getAttribute(Constants.KAPTCHA_SESSION_KEY))){
+			if(udao.insertUser(sid, sname, password)){
+				System.out.println("插入成功");
+				return "index";
+			}
 		}
 		System.out.println("插入失败");
 		return "index";
@@ -46,7 +53,6 @@ public class LoginController {
 	public void logout(@RequestParam String state, HttpSession session){
 		session.setAttribute("sid", "");
 		session.setAttribute("sname", "");
-	}
-	
+	}	
 	
 }
