@@ -3,6 +3,10 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String selectstr1 =  "<select name='type' class='input_v2'>"; 
+String selectstr2 =  "<option value='境内升学'>境内升学</option><option value='境外升学'>境外升学</option>" +
+        "<option value='协议就业'>协议就业</option><option value='公务员'>公务员</option><option value='选调生'>选调生</option>" +
+        "<option value='创业'>创业</option><option value='待就业'>待就业</option><option value='其他'>其他</option></select>";;
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,9 +56,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li class="active"><a href="#">学生职业生涯</a></li>
             </ul>
             <ul class="navbar-nav nav navbar-right">
-                <li><a href="#">用户</a></li>
+                 <li><a href="#"><%=session.getAttribute("sid") %></a></li>
                 <li>
-                    <a id="loginbtn"><span class="glyphicon glyphicon-log-in"></span>&nbsp;退出</a>
+                    <a id="logoutbtn"><span class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                 </li>
             </ul>
         </div>
@@ -103,7 +107,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </td>
 
             <td data-field="time" width="15%">${record.time}</td>
-            <td data-field="type" width="20%">${record.type}</td>
+            <td data-field="type" width="20%"><%=selectstr1 %>
+            <option value="${record.type}">${record.type}</option><%=selectstr2 %></td>
             <td data-field="cname" width="20%">${record.cname}</td>
             <td data-field="job" width="20%">${record.job}</td>
             <td data-field="comment" width="25%">${record.comment}</td>
@@ -119,14 +124,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <script type="text/javascript" src="./assets/js/bootstraptable.js"></script>
+<script type="text/javascript" src="./assets/js/edit.js"></script>
 <script>
 function append() {
-    var strAppend = '<tr style="background: rgb(255, 255, 255) none repeat scroll 0% 0%;"><td ><input type="checkbox" value="" editable="false" name="checkbox"></td>'
-    + '<td data-field="time"></td><td data-field="type"></td>'
-    + '<td data-field="cname"></td><td data-field="job"></td><td data-field="comment"></td><tr>';
+    var typeselstr = "<select name='type' class='input_v2'>" +
+            "<option value=''></option> <option value='境内升学'>境内升学</option><option value='境外升学'>境外升学</option>" +
+            "<option value='协议就业'>协议就业</option><option value='公务员'>公务员</option><option value='选调生'>选调生</option>" +
+            "<option value='创业'>创业</option><option value='待就业'>待就业</option><option value='其他'>其他</option></select>";
+
+    var strAppend = '<tr style="background: rgb(255, 255, 255) none repeat scroll 0% 0%;"><td><input type="checkbox" value=""' +
+            ' editable="false" name="checkbox"></td><td  data-field="time"></td><td  data-field="type" class="typecls">' + typeselstr + '</td><td data-field="cname"></td>'
+            + '<td  data-field="job"></td><td  data-field="comment"></td><tr>';
     $("#AddFamily tbody ").append(strAppend).editableTableWidget();
 }
 </script>
-<script type="text/javascript" src="./assets/js/edit.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
  */
 $(document).ready(function () {
     $("#btnDel").click(function () {
-        $(":checked").parent().parent().fadeOut("show"); //隐藏所有被选中的input元素
+        $("input:checked").parent().parent().fadeOut("show"); //隐藏所有被选中的input元素
         //parent() 获得当前匹配元素集合中每个元素的父元素,
     })
 

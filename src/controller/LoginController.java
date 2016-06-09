@@ -41,4 +41,10 @@ public class LoginController {
 		System.out.println("插入失败");
 		return "index";
 	}
+	
+	@RequestMapping(value="/logout")
+	public void logout(@RequestParam String state, HttpSession session){
+		session.setAttribute("sid", "");
+		session.setAttribute("sname", "");
+	}
 }

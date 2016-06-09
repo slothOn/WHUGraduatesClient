@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <ul class="navbar-nav nav navbar-right">
                 <li><a href="#"><%=session.getAttribute("sid") %></a></li>
                 <li>
-                    <a id="loginbtn"><span class="glyphicon glyphicon-log-in"></span>&nbsp;退出</a>
+                    <a id="logoutbtn"><span class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                 </li>
             </ul>
         </div>

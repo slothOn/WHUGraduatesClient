@@ -52,9 +52,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li><a href="studentjob.html">学生职业生涯</a></li>
             </ul>
             <ul class="navbar-nav nav navbar-right">
-                <li><a href="#">用户</a></li>
+                <li><a href="#"><%=session.getAttribute("sid") %></a></li>
                 <li>
-                    <a id="loginbtn"><span class="glyphicon glyphicon-log-in"></span>&nbsp;退出</a>
+                    <a id="logoutbtn"><span class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                 </li>
             </ul>
         </div>
