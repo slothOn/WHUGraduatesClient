@@ -94,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <h4 class="modal-title">注册账号</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" action="logup.html" method="post">
+                        <form class="form-horizontal" action="logup.html" method="post" id="signform">
                             <div class="form-group">
                                 <label class="control-label col-sm-2">账号:</label>
                                 <div class="col-sm-10">
@@ -113,6 +113,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     <input type="password" name="password" class="form-control" placeholder="请输入密码">
                                 </div>
                             </div>
+                             <div class="form-group">
+                                <label class="control-label col-sm-2">重复密码:</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="password2" class="form-control" placeholder="再输入一遍">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-2">验证码:</label>
                                 <div  class="col-sm-5">
@@ -123,7 +129,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="form-group">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-5">
-                                    <input type="submit" class="btn btn-lg btn-info" value="注册">
+                                    <input type="submit" class="btn btn-lg btn-info" value="注册" id="submitbtn" onclick="checkform()">
                                 </div>
                             </div>
                         </form>
@@ -137,11 +143,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/js/jquery.backstretch.min.js"></script>
         <script src="assets/js/scripts.js"></script>
-        
-        <!--[if lt IE 10]>
-            <script src="assets/js/placeholder.js"></script>
-        <![endif]-->
-
+       	 <script type="text/javascript">
+            function checkform(){
+                if($("#signform :password").get(0).value != $("#signform :password").get(1).value){
+                    alert("两次密码不一致重新注册");
+                }
+                $("#signform").submit();
+            }
+        </script>
     </body>
 
 </html>

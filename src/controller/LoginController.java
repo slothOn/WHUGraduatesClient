@@ -4,12 +4,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.code.kaptcha.Constants;
 
+import exception.SpringException;
 import service.UserDao;
 
 @Controller
@@ -37,16 +39,18 @@ public class LoginController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/logup")
+	@ExceptionHandler(value=SpringException.class)
 	public String logup(@RequestParam String sid, @RequestParam String sname, 
 			@RequestParam String password, @RequestParam String captcha, HttpSession session){
 		if(captcha != null && captcha.equals(session.getAttribute(Constants.KAPTCHA_SESSION_KEY))){
 			if(udao.insertUser(sid, sname, password)){
+				System.out.println(sname);
 				System.out.println("插入成功");
 				return "index";
 			}
 		}
 		System.out.println("插入失败");
-		return "index";
+		throw new SpringException("注册失败");
 	}
 	
 	@RequestMapping(value="/logout")

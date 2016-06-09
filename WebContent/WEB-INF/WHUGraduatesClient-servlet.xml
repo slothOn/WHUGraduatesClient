@@ -100,10 +100,17 @@
 				propagation="REQUIRED" timeout="5"/>
 		</tx:attributes>
 	</tx:advice>
-
 	<aop:config>
 		<aop:pointcut id="daoPointcut" expression="bean(*Dao)"/>
 		<aop:advisor advice-ref="txAdvice" 
 			pointcut-ref="daoPointcut"/>
 	</aop:config>
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="exception.SpringException">exceptionpage</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView" value="error"></property>
+	</bean>
 </beans>
