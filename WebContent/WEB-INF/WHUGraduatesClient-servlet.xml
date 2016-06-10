@@ -105,13 +105,7 @@
 		<aop:advisor advice-ref="txAdvice" 
 			pointcut-ref="daoPointcut"/>
 	</aop:config>
-	<!--  
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="exception.SpringException">exceptionpage</prop>
-			</props>
-		</property>
-		<property name="defaultErrorView" value="error"></property>
-	</bean>-->
+		<property name="defaultErrorView" value="error"/>
+	</bean>
 </beans>
