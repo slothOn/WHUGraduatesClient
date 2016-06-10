@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.code.kaptcha.Constants;
 
-import exception.SpringException;
+import entity.User;
 import service.UserDao;
 
 @Controller
@@ -29,14 +31,23 @@ public class LoginController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/user")
-	public String login(@RequestParam String username, @RequestParam String password, @RequestParam String captcha, HttpSession session){
+	public ModelAndView login(@RequestParam String username, @RequestParam String password, @RequestParam String captcha, HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		String msg = null;
 		if(captcha != null && captcha.equals(session.getAttribute(Constants.KAPTCHA_SESSION_KEY))){
-			if(udao.checkUser(username, password)){		
+			List list = udao.checkUser(username, password);
+			if(list != null && list.size() > 0){		
+				User u = (User) list.get(0);
 				session.setAttribute("sid", username);
-				return "redirect:mainpage.html";
+				session.setAttribute("sname", u.getSname());
+				mav.setViewName("redirect:mainpage.html");
+				return mav;
 			}
-		}
-		return "index";
+			msg = "账户名或密码错误";
+		}else msg = "验证码错误";
+		mav.setViewName("index");
+		mav.addObject("message", msg);
+		return mav;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/logup")

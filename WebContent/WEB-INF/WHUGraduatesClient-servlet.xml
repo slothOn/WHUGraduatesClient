@@ -106,6 +106,6 @@
 			pointcut-ref="daoPointcut"/>
 	</aop:config>
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="defaultErrorView" value="error"/>
+		<property name="defaultErrorView" value="error"/> 
 	</bean>
 </beans>

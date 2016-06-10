@@ -46,7 +46,6 @@ function serializeTable($tbody){
         }
         if(!isEmptyObject($robj)) $robjs.push($robj);
     }
-    alert(JSON.stringify($robjs));
     return $robjs;
 }
 

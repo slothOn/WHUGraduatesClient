@@ -19,7 +19,7 @@ public class TestUser extends AbstractTransactionalJUnit4SpringContextTests{
 	private UserDao udao;
 	@Test
 	public void checkTest(){
-		if(udao.checkUser("2012301130118", "wudazihuan")){
+		if(udao.checkUser("2012301130118", "wudazihuan") != null){
 			System.out.println("登录成功");
 		}else System.out.println("登录失败");
 	}

@@ -42,7 +42,7 @@ public class StudentController {
 		ModelAndView mav = new ModelAndView();
 		String sid = (String) session.getAttribute("sid");
 		Student_info studentinfo = studao.getStudentinfoBysid(sid);
-		session.setAttribute("sname", studentinfo.getSname());
+		if(studentinfo != null) session.setAttribute("sname", studentinfo.getSname());
 		mav.setViewName("mainpage");
 		mav.addObject("student", studentinfo);
 		return mav;
