@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.code.kaptcha.Constants;
 
@@ -22,7 +23,7 @@ public class LoginController {
 		this.udao = udao;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value="/index")
+	@RequestMapping(value="/index")
 	public String index(){
 		return "index";	
 	}
@@ -39,18 +40,24 @@ public class LoginController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/logup")
-	@ExceptionHandler(value=SpringException.class)
-	public String logup(@RequestParam String sid, @RequestParam String sname, 
+	//@ExceptionHandler(value=SpringException.class)
+	public ModelAndView logup(@RequestParam String sid, @RequestParam String sname, 
 			@RequestParam String password, @RequestParam String captcha, HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		String msg = null;
 		if(captcha != null && captcha.equals(session.getAttribute(Constants.KAPTCHA_SESSION_KEY))){
-			if(udao.insertUser(sid, sname, password)){
-				System.out.println(sname);
-				System.out.println("插入成功");
-				return "index";
-			}
-		}
-		System.out.println("插入失败");
-		throw new SpringException("注册失败");
+			try{
+				if(udao.insertUser(sid, sname, password)){
+					System.out.println(sname);
+					msg = "注册成功";
+				}
+			}catch(Exception e){
+				msg = "注册失败，账号已存在";
+			}		
+		}else msg = "注册失败，验证码错误";
+		mav.setViewName("index");
+		mav.addObject("message", msg);
+		return mav;
 	}
 	
 	@RequestMapping(value="/logout")
