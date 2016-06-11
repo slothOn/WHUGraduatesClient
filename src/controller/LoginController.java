@@ -1,12 +1,16 @@
 package controller;
 
+import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,25 +54,27 @@ public class LoginController {
 		return mav;
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/logup")
-	//@ExceptionHandler(value=SpringException.class)
-	public ModelAndView logup(@RequestParam String sid, @RequestParam String sname, 
-			@RequestParam String password, @RequestParam String captcha, HttpSession session){
-		ModelAndView mav = new ModelAndView();
+	@RequestMapping(method = RequestMethod.POST, value="/logup")
+	public void logup(@RequestBody String requestbody, HttpServletResponse response, HttpSession session) throws IOException{
+		String requeststr = URLDecoder.decode(requestbody);
+		System.out.println(requeststr);
+		JSONObject jsobj = new JSONObject(requeststr);
+		String sid = (String)jsobj.get("sid");
+		String sname = (String)jsobj.get("sname");
+		String password = (String)jsobj.get("password");
+		String captcha = (String)jsobj.get("captcha");
 		String msg = null;
 		if(captcha != null && captcha.equals(session.getAttribute(Constants.KAPTCHA_SESSION_KEY))){
 			try{
 				if(udao.insertUser(sid, sname, password)){
-					System.out.println(sname);
-					msg = "注册成功";
+					msg = "0";
 				}
 			}catch(Exception e){
-				msg = "注册失败，账号已存在";
+				msg = "1";
 			}		
-		}else msg = "注册失败，验证码错误";
-		mav.setViewName("index");
-		mav.addObject("message", msg);
-		return mav;
+		}else msg = "2";
+		response.getWriter().write(msg);
+		response.getWriter().flush();
 	}
 	
 	@RequestMapping(value="/logout")

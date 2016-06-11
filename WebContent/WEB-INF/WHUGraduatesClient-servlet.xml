@@ -23,6 +23,7 @@
 			<mvc:exclude-mapping path="/index.html"/>
 			<mvc:exclude-mapping path="/captcha.html"/>
 			<mvc:exclude-mapping path="/user.html"/>
+			<mvc:exclude-mapping path="/logup.html"/>
 			<bean class="interceptor.AuthInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
