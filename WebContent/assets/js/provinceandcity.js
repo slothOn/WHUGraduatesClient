@@ -179,7 +179,6 @@ function setCity(provinec) {
             proCity = taiwan;
             break;
     }
-
     //先清空之前绑定的值
     $city.empty();
     $city.append("<option value='' selected></option>");
@@ -187,23 +186,17 @@ function setCity(provinec) {
     for (var i = 0, len = proCity.length; i < len; i++) {
         modelVal = proCity[i];
         option = "<option value='" + modelVal + "'>" + modelVal + "</option>";
-
         //添加
         $city.append(option);
     }
-
     //设置背景
     setBgColor();
 }
-
-
 //省份选中事件
 function provinceChange() {
     var $pro = $("#selProvince");
     setCity($pro.val());
 }
-
-
 //设置下拉列表间隔背景样色
 function setBgColor() {
     var $option = $("select option:odd");

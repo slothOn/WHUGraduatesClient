@@ -93,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </select>
                     </div>
                     <div class="col-sm-4">
-                        <select id="selCity" name="scity" onclick="provinceChange();" class="form-control">
+                        <select id="selCity" name="scity" onfocus="provinceChange();" class="form-control">
                             <option value='${student.scity}' selected>${student.scity}</option>
                         </select>
                     </div>
